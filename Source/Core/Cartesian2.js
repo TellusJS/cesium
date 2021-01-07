@@ -5,6 +5,8 @@ import DeveloperError from "./DeveloperError.js";
 import CesiumMath from "./Math.js";
 
 /**
+ * 二维笛卡尔坐标点
+ *
  * A 2D Cartesian point.
  * @alias Cartesian2
  * @constructor
