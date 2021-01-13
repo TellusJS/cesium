@@ -5,9 +5,9 @@ import DeveloperError from "./DeveloperError.js";
 import CesiumMath from "./Math.js";
 
 /**
- * 二维笛卡尔坐标点
- *
- * A 2D Cartesian point.
+ * 平面坐标系/平面向量
+ * <p>向量解释为与轴平行的位移序列。</p>
+ * <p>A 2D Cartesian point.</p>
  * @alias Cartesian2
  * @constructor
  *
@@ -147,13 +147,14 @@ Cartesian2.unpack = function (array, startingIndex, result) {
 };
 
 /**
-     * Flattens an array of Cartesian2s into and array of components.
-     *
-     * @param {Cartesian2[]} array The array of cartesians to pack.
-     * @param {Number[]} [result] The array onto which to store the result. If this is a typed array, it must have array.length * 2 components, else a {@link DeveloperError} will be thrown. If it is a regular array, it will be resized to have (array.length * 2) elements.
+ * 将坐标数据array转为一维数组
+ * <p>Flattens an array of Cartesian2s into and array of components.</p>
+ *
+ * @param {Cartesian2[]} array The array of cartesians to pack.
+ * @param {Number[]} [result] The array onto which to store the result. If this is a typed array, it must have array.length * 2 components, else a {@link DeveloperError} will be thrown. If it is a regular array, it will be resized to have (array.length * 2) elements.
 
-     * @returns {Number[]} The packed array.
-     */
+ * @returns {Number[]} The packed array.
+ */
 Cartesian2.packArray = function (array, result) {
   //>>includeStart('debug', pragmas.debug);
   Check.defined("array", array);
@@ -297,7 +298,8 @@ Cartesian2.maximumByComponent = function (first, second, result) {
 };
 
 /**
- * Computes the provided Cartesian's squared magnitude.
+ * 返回平方和
+ * <p>Computes the provided Cartesian's squared magnitude.</p>
  *
  * @param {Cartesian2} cartesian The Cartesian instance whose squared magnitude is to be computed.
  * @returns {Number} The squared magnitude.
@@ -311,7 +313,8 @@ Cartesian2.magnitudeSquared = function (cartesian) {
 };
 
 /**
- * Computes the Cartesian's magnitude (length).
+ * 返回平方和的开平方
+ * <p>Computes the Cartesian's magnitude (length).</p>
  *
  * @param {Cartesian2} cartesian The Cartesian instance whose magnitude is to be computed.
  * @returns {Number} The magnitude.
@@ -323,7 +326,8 @@ Cartesian2.magnitude = function (cartesian) {
 var distanceScratch = new Cartesian2();
 
 /**
- * Computes the distance between two points.
+ * 距离公式
+ * <p>Computes the distance between two points.</p>
  *
  * @param {Cartesian2} left The first point to compute the distance from.
  * @param {Cartesian2} right The second point to compute the distance to.
@@ -344,9 +348,10 @@ Cartesian2.distance = function (left, right) {
 };
 
 /**
- * Computes the squared distance between two points.  Comparing squared distances
+ * 距离平方
+ * <p>Computes the squared distance between two points.  Comparing squared distances
  * using this function is more efficient than comparing distances using {@link Cartesian2#distance}.
- *
+ * </p>
  * @param {Cartesian2} left The first point to compute the distance from.
  * @param {Cartesian2} right The second point to compute the distance to.
  * @returns {Number} The distance between two points.
@@ -366,7 +371,9 @@ Cartesian2.distanceSquared = function (left, right) {
 };
 
 /**
- * Computes the normalized form of the supplied Cartesian.
+ * 单位向量，或称标准化向量
+ * <p>几何意义：单位向量就是大小为 1 的向量。如果只关心向量的方向而不关心其大小，使用单位向量非常方便。计算方式是将向量除以它的大小（模）即可。</p>
+ * <p>Computes the normalized form of the supplied Cartesian.</p>
  *
  * @param {Cartesian2} cartesian The Cartesian to be normalized.
  * @param {Cartesian2} result The object onto which to store the result.
@@ -393,10 +400,18 @@ Cartesian2.normalize = function (cartesian, result) {
 };
 
 /**
- * Computes the dot (scalar) product of two Cartesians.
+ * 向量点乘，也称内积
+ * <p>几何意义：一般来说，点乘结果描述了两个向量的“相似”程度，点乘结果越大，两向量越接近。</p>
+ * <p>运算法则：向量点乘就是对应分量乘积的和，其结果是一个标量，且满足交换律。</p>
+ * <p>零向量与其它任意向量都垂直。</p>
+ * <p>Computes the dot (scalar) product of two Cartesians.</p>
  *
  * @param {Cartesian2} left The first Cartesian.
  * @param {Cartesian2} right The second Cartesian.
+ * @example
+ * a·b > 0, 0<=θ<90, a和b方向基本相同
+ * a·b = 0, θ=90, a和b正交
+ * a·b < 0, 90<θ<=180, a和b方向基本相反
  * @returns {Number} The dot product.
  */
 Cartesian2.dot = function (left, right) {
@@ -409,7 +424,13 @@ Cartesian2.dot = function (left, right) {
 };
 
 /**
- * Computes the magnitude of the cross product that would result from implicitly setting the Z coordinate of the input vectors to 0
+ * 向量叉乘，也称外积
+ * <p>几何意义：叉乘得到的向量垂直于原来的两个向量。
+ * 在左手坐标系中，使得 a 的头和 b 的尾相接，如果 a 和 b 呈顺时针，则 axb 的结果向量指向您，逆时针则背向您。
+ * 在右手坐标系中，恰好相反。
+ * </p>
+ * <p>运算法则：其结果是一个向量，不满足交换律。当点乘和叉乘在一起运算时，叉乘优先计算 a·(bxc)，即三重积。</p>
+ * <p>Computes the magnitude of the cross product that would result from implicitly setting the Z coordinate of the input vectors to 0</p>
  *
  * @param {Cartesian2} left The first Cartesian.
  * @param {Cartesian2} right The second Cartesian.
@@ -465,7 +486,10 @@ Cartesian2.divideComponents = function (left, right, result) {
 };
 
 /**
- * Computes the componentwise sum of two Cartesians.
+ * 向量加法
+ * <p>几何意义：将“三角形法则”扩展到多个向量，向量能被解释为与轴平行的位移序列。[1, -3, 4] 向量表示向右1个单位，向下3个单位，向前4个单位。</p>
+ * <p>运算法则：两个向量相加，将对应分量相加即可。其结果是一个向量。满足交换律。</p>
+ * <p>Computes the componentwise sum of two Cartesians.</p>
  *
  * @param {Cartesian2} left The first Cartesian.
  * @param {Cartesian2} right The second Cartesian.
@@ -485,7 +509,8 @@ Cartesian2.add = function (left, right, result) {
 };
 
 /**
- * Computes the componentwise difference of two Cartesians.
+ * 向量减法，理解为向量加负向量即可。
+ * <p>Computes the componentwise difference of two Cartesians.</p>
  *
  * @param {Cartesian2} left The first Cartesian.
  * @param {Cartesian2} right The second Cartesian.
@@ -505,6 +530,8 @@ Cartesian2.subtract = function (left, right, result) {
 };
 
 /**
+ * 标量与向量乘法
+ * <p>几何意义：向量乘以标量 k 的效果是以因子 |k| 缩放向量的长度。如果 k<0，则向量的方向被倒转。</p>
  * Multiplies the provided Cartesian componentwise by the provided scalar.
  *
  * @param {Cartesian2} cartesian The Cartesian to be scaled.
@@ -525,7 +552,8 @@ Cartesian2.multiplyByScalar = function (cartesian, scalar, result) {
 };
 
 /**
- * Divides the provided Cartesian componentwise by the provided scalar.
+ * 标量与向量除法，即乘以倒数即可。
+ * <p>Divides the provided Cartesian componentwise by the provided scalar.</p>
  *
  * @param {Cartesian2} cartesian The Cartesian to be divided.
  * @param {Number} scalar The scalar to divide by.
@@ -545,10 +573,16 @@ Cartesian2.divideByScalar = function (cartesian, scalar, result) {
 };
 
 /**
- * Negates the provided Cartesian.
+ * 求负向量，返回与坐标点 cartesian 相反的坐标点。
+ * <p>几何意义：得到一个和原向量大小相等，方向相反的向量。</p>
+ * <p>Negates the provided Cartesian.</p>
  *
  * @param {Cartesian2} cartesian The Cartesian to be negated.
  * @param {Cartesian2} result The object onto which to store the result.
+ * @example
+ * let cartesian1 = new Cesium.Cartesian2(1, 1);
+ * let result = Cesium.Cartesian2.negate(cartesian1, result);//(-1, -1)
+ *
  * @returns {Cartesian2} The modified result parameter.
  */
 Cartesian2.negate = function (cartesian, result) {
@@ -563,10 +597,13 @@ Cartesian2.negate = function (cartesian, result) {
 };
 
 /**
- * Computes the absolute value of the provided Cartesian.
+ * 单纯的计算坐标各分量的绝对值
+ * <p>Computes the absolute value of the provided Cartesian.</p>
  *
  * @param {Cartesian2} cartesian The Cartesian whose absolute value is to be computed.
  * @param {Cartesian2} result The object onto which to store the result.
+ * @example
+ * (-41, 1) → (41, 1)
  * @returns {Cartesian2} The modified result parameter.
  */
 Cartesian2.abs = function (cartesian, result) {
@@ -582,7 +619,8 @@ Cartesian2.abs = function (cartesian, result) {
 
 var lerpScratch = new Cartesian2();
 /**
- * Computes the linear interpolation or extrapolation at t using the provided cartesians.
+ * 计算两个平面坐标 t 处的线性插值。
+ * <p>Computes the linear interpolation or extrapolation at t using the provided cartesians.</p>
  *
  * @param {Cartesian2} start The value corresponding to t at 0.0.
  * @param {Cartesian2} end The value corresponding to t at 1.0.
@@ -606,7 +644,9 @@ Cartesian2.lerp = function (start, end, t, result) {
 var angleBetweenScratch = new Cartesian2();
 var angleBetweenScratch2 = new Cartesian2();
 /**
- * Returns the angle, in radians, between the provided Cartesians.
+ * 计算两平个面向量夹角（弧度表示）
+ * <p>运算法则：向量内积公式 θ = arccos(a·b)，a 和 b 是单位向量。</p>
+ * <p>Returns the angle, in radians, between the provided Cartesians.</p>
  *
  * @param {Cartesian2} left The first Cartesian.
  * @param {Cartesian2} right The second Cartesian.
@@ -627,7 +667,9 @@ Cartesian2.angleBetween = function (left, right) {
 
 var mostOrthogonalAxisScratch = new Cartesian2();
 /**
- * Returns the axis that is most orthogonal to the provided Cartesian.
+ * 计算和指定平面向量最正交的坐标轴。
+ * <p>正交：两个向量的内积为 0，则为正交，意即垂直。</p>
+ * <p>Returns the axis that is most orthogonal to the provided Cartesian.</p>
  *
  * @param {Cartesian2} cartesian The Cartesian on which to find the most orthogonal axis.
  * @param {Cartesian2} result The object onto which to store the result.
