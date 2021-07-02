@@ -6,8 +6,11 @@ import DeveloperError from "./DeveloperError.js";
 import CesiumMath from "./Math.js";
 
 /**
- * A 3x3 matrix, indexable as a column-major order array.
- * Constructor parameters are in row-major order for code readability.
+ * 3x3 矩阵，用于描述旋转变换。表达3D线性变换。
+ * <p>向量是标量的数组，矩阵是向量的数组。</p>
+ * <p>单位矩阵是一种特殊的对角矩阵，其对角线元素为 1，其它元素为 0。它是矩阵的乘法单元，即任一矩阵乘以单位矩阵，都将得到原矩阵。类似于标量中的 1。</p>
+ * <p>A 3x3 matrix, indexable as a column-major order array.
+ * Constructor parameters are in row-major order for code readability.</p>
  * @alias Matrix3
  * @constructor
  * @implements {ArrayLike<number>}
@@ -826,7 +829,8 @@ Matrix3.getMaximumScale = function (matrix) {
 };
 
 /**
- * Computes the product of two matrices.
+ * 矩阵乘法
+ * <p>Computes the product of two matrices.</p>
  *
  * @param {Matrix3} left The first matrix.
  * @param {Matrix3} right The second matrix.
@@ -928,6 +932,7 @@ Matrix3.subtract = function (left, right, result) {
 };
 
 /**
+ * 向量与矩阵的乘法
  * Computes the product of a matrix and a column vector.
  *
  * @param {Matrix3} matrix The matrix.
@@ -957,7 +962,9 @@ Matrix3.multiplyByVector = function (matrix, cartesian, result) {
 };
 
 /**
- * Computes the product of a matrix and a scalar.
+ * 矩阵与标量的乘法
+ * <p>运算法则：矩阵 M 和标量 k 相乘，即用 k 乘以 M 中的每一个元素。结果是一个和 M 维数相同的矩阵。</p>
+ * <p>Computes the product of a matrix and a scalar.</p>
  *
  * @param {Matrix3} matrix The matrix.
  * @param {Number} scalar The number to multiply by.

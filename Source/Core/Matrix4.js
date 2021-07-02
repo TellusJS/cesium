@@ -8,8 +8,9 @@ import Matrix3 from "./Matrix3.js";
 import RuntimeError from "./RuntimeError.js";
 
 /**
- * A 4x4 matrix, indexable as a column-major order array.
- * Constructor parameters are in row-major order for code readability.
+ * 4x4 矩阵，用于描述旋转加平移变换
+ * <p>A 4x4 matrix, indexable as a column-major order array.
+ * Constructor parameters are in row-major order for code readability.</p>
  * @alias Matrix4
  * @constructor
  * @implements {ArrayLike<number>}

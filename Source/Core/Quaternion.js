@@ -7,7 +7,8 @@ import CesiumMath from "./Math.js";
 import Matrix3 from "./Matrix3.js";
 
 /**
- * A set of 4-dimensional coordinates used to represent rotation in 3-dimensional space.
+ * 四元数，用于描述围绕某个向量旋转一定角度的变换
+ * <p>A set of 4-dimensional coordinates used to represent rotation in 3-dimensional space.</P>
  * @alias Quaternion
  * @constructor
  *

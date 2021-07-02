@@ -6,7 +6,8 @@ import CesiumMath from "./Math.js";
 import scaleToGeodeticSurface from "./scaleToGeodeticSurface.js";
 
 /**
- * A position defined by longitude, latitude, and height.
+ * 地理坐标系（弧度表示）
+ * <p>A position defined by longitude, latitude, and height.</p>
  * @alias Cartographic
  * @constructor
  *

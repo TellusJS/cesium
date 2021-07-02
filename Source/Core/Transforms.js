@@ -21,7 +21,8 @@ import Quaternion from "./Quaternion.js";
 import TimeConstants from "./TimeConstants.js";
 
 /**
- * Contains functions for transforming positions to various reference frames.
+ * 包含了将位置转换为各种参考系的功能
+ * <p>Contains functions for transforming positions to various reference frames.</P>
  *
  * @namespace Transforms
  */

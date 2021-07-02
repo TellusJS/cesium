@@ -5,7 +5,8 @@ import DeveloperError from "./DeveloperError.js";
 import CesiumMath from "./Math.js";
 
 /**
- * A 3D Cartesian point.
+ * 笛卡尔空间直角坐标系/空间向量
+ * <p>A 3D Cartesian point.</p>
  * @alias Cartesian3
  * @constructor
  *
